@@ -11,27 +11,37 @@ return (function()
 
 	local Config = {
 		Enabled = false,
-		Boxes = true,
-		Names = true,
-		Tracers = false,
-		TeamColor = false,
-		Color = Color3.new(1, 1, 1),
-		BoxThickness = 1,
-		ExtraBottomPadding = 10,
+
+		Toggle = {
+			Boxes = true,
+			Names = true,
+			Tracers = false,
+		},
+
+		Team = {
+			Check = false,       -- Skip rendering if player is on the same team
+			UseTeamColor = false -- Use team color instead of default color
+		},
+
+		Visual = {
+			Color = Color3.new(1, 1, 1),
+			BoxThickness = 1,
+			ExtraBoxHeight = 10,
+		}
 	}
 
 	local function SetupPlayerESP(plr)
 		if not ESPBoxes[plr] then
 			local outline = Drawing.new("Square")
 			outline.Color = Color3.new(0, 0, 0)
-			outline.Thickness = Config.BoxThickness
+			outline.Thickness = Config.Visual.BoxThickness
 			outline.Filled = false
 			outline.Visible = false
 			ESPBoxOutlines[plr] = outline
 
 			local box = Drawing.new("Square")
-			box.Color = Config.Color
-			box.Thickness = Config.BoxThickness
+			box.Color = Config.Visual.Color
+			box.Thickness = Config.Visual.BoxThickness
 			box.Filled = false
 			box.Visible = false
 			ESPBoxes[plr] = box
@@ -39,14 +49,14 @@ return (function()
 			local name = Drawing.new("Text")
 			name.Text = plr.Name
 			name.Size = 16
-			name.Color = Config.Color
+			name.Color = Config.Visual.Color
 			name.Center = true
 			name.Outline = true
 			name.Visible = false
 			ESPNames[plr] = name
 
 			local tracer = Drawing.new("Line")
-			tracer.Color = Config.Color
+			tracer.Color = Config.Visual.Color
 			tracer.Thickness = 1
 			tracer.Visible = false
 			ESPTracers[plr] = tracer
@@ -55,13 +65,9 @@ return (function()
 
 	local function GetCharacterBoundingBox(plr)
 		local char = plr.Character
-		if not char then
-			return
-		end
+		if not char then return end
 		local humanoid = char:FindFirstChildOfClass("Humanoid")
-		if not humanoid or humanoid.Health <= 0 then
-			return
-		end
+		if not humanoid or humanoid.Health <= 0 then return end
 
 		local parts = {}
 		for _, part in pairs(char:GetChildren()) do
@@ -74,18 +80,18 @@ return (function()
 		local maxX, maxY = -math.huge, -math.huge
 
 		for _, part in pairs(parts) do
+			local size = part.Size / 2
 			local corners = {
-				part.CFrame * Vector3.new(-part.Size.X / 2, -part.Size.Y / 2, -part.Size.Z / 2),
-				part.CFrame * Vector3.new(-part.Size.X / 2, -part.Size.Y / 2, part.Size.Z / 2),
-				part.CFrame * Vector3.new(-part.Size.X / 2, part.Size.Y / 2, -part.Size.Z / 2),
-				part.CFrame * Vector3.new(-part.Size.X / 2, part.Size.Y / 2, part.Size.Z / 2),
-				part.CFrame * Vector3.new(part.Size.X / 2, -part.Size.Y / 2, -part.Size.Z / 2),
-				part.CFrame * Vector3.new(part.Size.X / 2, -part.Size.Y / 2, part.Size.Z / 2),
-				part.CFrame * Vector3.new(part.Size.X / 2, part.Size.Y / 2, -part.Size.Z / 2),
-				part.CFrame * Vector3.new(part.Size.X / 2, part.Size.Y / 2, part.Size.Z / 2),
+				part.CFrame * Vector3.new(-size.X, -size.Y, -size.Z),
+				part.CFrame * Vector3.new(-size.X, -size.Y,  size.Z),
+				part.CFrame * Vector3.new(-size.X,  size.Y, -size.Z),
+				part.CFrame * Vector3.new(-size.X,  size.Y,  size.Z),
+				part.CFrame * Vector3.new( size.X, -size.Y, -size.Z),
+				part.CFrame * Vector3.new( size.X, -size.Y,  size.Z),
+				part.CFrame * Vector3.new( size.X,  size.Y, -size.Z),
+				part.CFrame * Vector3.new( size.X,  size.Y,  size.Z),
 			}
-
-			for _, corner in pairs(corners) do
+			for _, corner in ipairs(corners) do
 				local screenPos, onScreen = Camera:WorldToViewportPoint(corner)
 				if onScreen then
 					minX = math.min(minX, screenPos.X)
@@ -96,134 +102,97 @@ return (function()
 			end
 		end
 
-		if minX == math.huge then
-			return nil, nil
-		end
-
+		if minX == math.huge then return end
 		return Vector2.new(minX, minY), Vector2.new(maxX, maxY)
 	end
 
 	RunService.RenderStepped:Connect(function()
 		if not Config.Enabled then
-			for plr, box in pairs(ESPBoxes) do
-				box.Visible = false
-			end
-			for plr, outline in pairs(ESPBoxOutlines) do
-				outline.Visible = false
-			end
-			for plr, name in pairs(ESPNames) do
-				name.Visible = false
-			end
-			for plr, tracer in pairs(ESPTracers) do
-				tracer.Visible = false
-			end
+			for _, box in pairs(ESPBoxes) do box.Visible = false end
+			for _, outline in pairs(ESPBoxOutlines) do outline.Visible = false end
+			for _, name in pairs(ESPNames) do name.Visible = false end
+			for _, tracer in pairs(ESPTracers) do tracer.Visible = false end
 			return
 		end
 
 		for _, plr in pairs(Players:GetPlayers()) do
-			if
-				plr ~= Player
-				and plr.Character
-				and plr.Character:FindFirstChild("HumanoidRootPart")
-				and plr.Character:FindFirstChildOfClass("Humanoid")
-				and plr.Character.Humanoid.Health > 0
-			then
-				SetupPlayerESP(plr)
+			if plr == Player then continue end
+			if Config.Team.Check and plr.Team == Player.Team then continue end
+			if not (plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")) then continue end
 
-				local rootPart = plr.Character.HumanoidRootPart
-				local pos, onScreen = Camera:WorldToViewportPoint(rootPart.Position)
-				if onScreen then
-					local topLeft, bottomRight = GetCharacterBoundingBox(plr)
-					if not topLeft or not bottomRight then
-						ESPBoxes[plr].Visible = false
-						ESPBoxOutlines[plr].Visible = false
-						ESPNames[plr].Visible = false
-						ESPTracers[plr].Visible = false
-					else
-						local boxSize = bottomRight - topLeft
-						boxSize = Vector2.new(boxSize.X, boxSize.Y + Config.ExtraBottomPadding)
+			local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
+			if not humanoid or humanoid.Health <= 0 then continue end
 
-						if Config.Boxes then
-							ESPBoxOutlines[plr].Visible = true
-							ESPBoxOutlines[plr].Position = topLeft - Vector2.new(1, 1)
-							ESPBoxOutlines[plr].Size = boxSize + Vector2.new(2, 2)
-							ESPBoxOutlines[plr].Thickness = Config.BoxThickness
+			SetupPlayerESP(plr)
 
-							ESPBoxes[plr].Visible = true
-							ESPBoxes[plr].Position = topLeft
-							ESPBoxes[plr].Size = boxSize
-							ESPBoxes[plr].Thickness = Config.BoxThickness
+			local rootPart = plr.Character.HumanoidRootPart
+			local screenPos, onScreen = Camera:WorldToViewportPoint(rootPart.Position)
+			if not onScreen then
+				ESPBoxes[plr].Visible = false
+				ESPBoxOutlines[plr].Visible = false
+				ESPNames[plr].Visible = false
+				ESPTracers[plr].Visible = false
+				continue
+			end
 
-							local col = Config.TeamColor and plr.TeamColor.Color or Config.Color
-							ESPBoxes[plr].Color = col
-							ESPBoxOutlines[plr].Color = Color3.new(0, 0, 0)
-						else
-							ESPBoxes[plr].Visible = false
-							ESPBoxOutlines[plr].Visible = false
-						end
+			local topLeft, bottomRight = GetCharacterBoundingBox(plr)
+			if not topLeft or not bottomRight then
+				ESPBoxes[plr].Visible = false
+				ESPBoxOutlines[plr].Visible = false
+				ESPNames[plr].Visible = false
+				ESPTracers[plr].Visible = false
+				continue
+			end
 
-						if Config.Names then
-							ESPNames[plr].Visible = true
-							ESPNames[plr].Position = Vector2.new((topLeft.X + bottomRight.X) / 2, topLeft.Y - 20)
-							ESPNames[plr].Text = plr.Name
-							ESPNames[plr].Color = Config.TeamColor and plr.TeamColor.Color or Config.Color
-						else
-							ESPNames[plr].Visible = false
-						end
+			local boxSize = bottomRight - topLeft
+			boxSize = Vector2.new(boxSize.X, boxSize.Y + Config.Visual.ExtraBoxHeight)
+			local color = Config.Team.UseTeamColor and plr.TeamColor.Color or Config.Visual.Color
 
-						if Config.Tracers then
-							ESPTracers[plr].Visible = true
-							ESPTracers[plr].From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y)
-							ESPTracers[plr].To = Vector2.new(pos.X, pos.Y)
-							ESPTracers[plr].Color = Config.TeamColor and plr.TeamColor.Color or Config.Color
-						else
-							ESPTracers[plr].Visible = false
-						end
-					end
-				else
-					ESPBoxes[plr].Visible = false
-					ESPBoxOutlines[plr].Visible = false
-					ESPNames[plr].Visible = false
-					ESPTracers[plr].Visible = false
-				end
+			-- Boxes
+			if Config.Toggle.Boxes then
+				ESPBoxOutlines[plr].Visible = true
+				ESPBoxOutlines[plr].Position = topLeft - Vector2.new(1, 1)
+				ESPBoxOutlines[plr].Size = boxSize + Vector2.new(2, 2)
+				ESPBoxOutlines[plr].Color = Color3.new(0, 0, 0)
+				ESPBoxOutlines[plr].Thickness = Config.Visual.BoxThickness
+
+				ESPBoxes[plr].Visible = true
+				ESPBoxes[plr].Position = topLeft
+				ESPBoxes[plr].Size = boxSize
+				ESPBoxes[plr].Color = color
+				ESPBoxes[plr].Thickness = Config.Visual.BoxThickness
 			else
-				if ESPBoxes[plr] then
-					ESPBoxes[plr].Visible = false
-				end
-				if ESPBoxOutlines[plr] then
-					ESPBoxOutlines[plr].Visible = false
-				end
-				if ESPNames[plr] then
-					ESPNames[plr].Visible = false
-				end
-				if ESPTracers[plr] then
-					ESPTracers[plr].Visible = false
-				end
+				ESPBoxes[plr].Visible = false
+				ESPBoxOutlines[plr].Visible = false
+			end
+
+			-- Names
+			if Config.Toggle.Names then
+				ESPNames[plr].Visible = true
+				ESPNames[plr].Position = Vector2.new((topLeft.X + bottomRight.X) / 2, topLeft.Y - 20)
+				ESPNames[plr].Text = plr.Name
+				ESPNames[plr].Color = color
+			else
+				ESPNames[plr].Visible = false
+			end
+
+			-- Tracers
+			if Config.Toggle.Tracers then
+				ESPTracers[plr].Visible = true
+				ESPTracers[plr].From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y)
+				ESPTracers[plr].To = Vector2.new(screenPos.X, screenPos.Y)
+				ESPTracers[plr].Color = color
+			else
+				ESPTracers[plr].Visible = false
 			end
 		end
 	end)
 
 	Players.PlayerRemoving:Connect(function(plr)
-		if ESPBoxes[plr] then
-			ESPBoxes[plr].Visible = false
-			ESPBoxes[plr]:Remove()
-			ESPBoxes[plr] = nil
-		end
-		if ESPBoxOutlines[plr] then
-			ESPBoxOutlines[plr].Visible = false
-			ESPBoxOutlines[plr]:Remove()
-			ESPBoxOutlines[plr] = nil
-		end
-		if ESPNames[plr] then
-			ESPNames[plr].Visible = false
-			ESPNames[plr]:Remove()
-			ESPNames[plr] = nil
-		end
-		if ESPTracers[plr] then
-			ESPTracers[plr].Visible = false
-			ESPTracers[plr]:Remove()
-			ESPTracers[plr] = nil
-		end
+		if ESPBoxes[plr] then ESPBoxes[plr]:Remove(); ESPBoxes[plr] = nil end
+		if ESPBoxOutlines[plr] then ESPBoxOutlines[plr]:Remove(); ESPBoxOutlines[plr] = nil end
+		if ESPNames[plr] then ESPNames[plr]:Remove(); ESPNames[plr] = nil end
+		if ESPTracers[plr] then ESPTracers[plr]:Remove(); ESPTracers[plr] = nil end
 	end)
 
 	return {
