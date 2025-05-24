@@ -12,12 +12,12 @@ return (function()
 
 
 	local Config = {
-		Enabled = true,
+		Enabled = false,
 		Boxes = true,
 		Names = true,
-		Tracers = true,
+		Tracers = false,
 		TeamColor = false,
-		Color = Color3.new(1, 0, 0),
+		Color = Color3.new(1, 1, 1),
 		BoxThickness = 1,
 		ExtraBottomPadding = 10,
 	}
@@ -27,7 +27,7 @@ return (function()
 		if not ESPBoxes[plr] then
 			local outline = Drawing.new("Square")
 			outline.Color = Color3.new(0, 0, 0)
-			outline.Thickness = Config.BoxThickness + 2
+			outline.Thickness = Config.BoxThickness + 1
 			outline.Filled = false
 			outline.Visible = false
 			ESPBoxOutlines[plr] = outline
