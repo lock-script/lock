@@ -4,12 +4,10 @@ return (function()
 	local Camera = workspace.CurrentCamera
 	local RunService = game:GetService("RunService")
 
-
 	local ESPBoxes = {}
 	local ESPBoxOutlines = {}
 	local ESPNames = {}
 	local ESPTracers = {}
-
 
 	local Config = {
 		Enabled = false,
@@ -22,12 +20,11 @@ return (function()
 		ExtraBottomPadding = 10,
 	}
 
-
 	local function SetupPlayerESP(plr)
 		if not ESPBoxes[plr] then
 			local outline = Drawing.new("Square")
 			outline.Color = Color3.new(0, 0, 0)
-			outline.Thickness = Config.BoxThickness + 1
+			outline.Thickness = Config.BoxThickness
 			outline.Filled = false
 			outline.Visible = false
 			ESPBoxOutlines[plr] = outline
@@ -55,7 +52,6 @@ return (function()
 			ESPTracers[plr] = tracer
 		end
 	end
-
 
 	local function GetCharacterBoundingBox(plr)
 		local char = plr.Character
@@ -101,12 +97,11 @@ return (function()
 		end
 
 		if minX == math.huge then
-			return nil, nil 
+			return nil, nil
 		end
 
 		return Vector2.new(minX, minY), Vector2.new(maxX, maxY)
 	end
-
 
 	RunService.RenderStepped:Connect(function()
 		if not Config.Enabled then
@@ -208,6 +203,28 @@ return (function()
 		end
 	end)
 
+	Players.PlayerRemoving:Connect(function(plr)
+		if ESPBoxes[plr] then
+			ESPBoxes[plr].Visible = false
+			ESPBoxes[plr]:Remove()
+			ESPBoxes[plr] = nil
+		end
+		if ESPBoxOutlines[plr] then
+			ESPBoxOutlines[plr].Visible = false
+			ESPBoxOutlines[plr]:Remove()
+			ESPBoxOutlines[plr] = nil
+		end
+		if ESPNames[plr] then
+			ESPNames[plr].Visible = false
+			ESPNames[plr]:Remove()
+			ESPNames[plr] = nil
+		end
+		if ESPTracers[plr] then
+			ESPTracers[plr].Visible = false
+			ESPTracers[plr]:Remove()
+			ESPTracers[plr] = nil
+		end
+	end)
 
 	return {
 		Config = Config,
