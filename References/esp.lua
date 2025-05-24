@@ -141,7 +141,7 @@ return (function()
 			end
 
 			local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
-			if humanoid humanoid.Health < 1 then
+			if humanoid and humanoid.Health < 1 then
 				ESPBoxes[plr].Visible = false
 				ESPBoxOutlines[plr].Visible = false
 				ESPNames[plr].Visible = false
