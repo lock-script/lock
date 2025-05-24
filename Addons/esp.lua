@@ -24,7 +24,7 @@ return (function()
 		if not ESPBoxes[plr] then
 			local outline = Drawing.new("Square")
 			outline.Color = Color3.new(0, 0, 0)
-			outline.Thickness = Config.BoxThickness
+			outline.Thickness = Config.BoxThickness + 1
 			outline.Filled = false
 			outline.Visible = false
 			ESPBoxOutlines[plr] = outline
@@ -147,7 +147,7 @@ return (function()
 							ESPBoxOutlines[plr].Visible = true
 							ESPBoxOutlines[plr].Position = topLeft - Vector2.new(1, 1)
 							ESPBoxOutlines[plr].Size = boxSize + Vector2.new(2, 2)
-							ESPBoxOutlines[plr].Thickness = Config.BoxThickness + 2
+							ESPBoxOutlines[plr].Thickness = Config.BoxThickness + 1
 
 							ESPBoxes[plr].Visible = true
 							ESPBoxes[plr].Position = topLeft
