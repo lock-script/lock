@@ -92,10 +92,14 @@ return (function()
 
 	local function GetCharacterBoundingBox(plr)
 		local char = plr.Character
-		if not char then return end
+		if not char then
+			return
+		end
 
 		local humanoid = char:FindFirstChildOfClass("Humanoid")
-		if not humanoid or humanoid.Health <= 0 then return end
+		if not humanoid or humanoid.Health <= 0 then
+			return
+		end
 
 		local parts = {}
 		for _, part in pairs(char:GetChildren()) do
@@ -130,13 +134,23 @@ return (function()
 			end
 		end
 
-		if minX == math.huge then return end
+		if minX == math.huge then
+			return
+		end
 		return Vector2.new(minX, minY), Vector2.new(maxX, maxY)
 	end
 
 	RunService.RenderStepped:Connect(function()
 		if not Config.Enabled then
-			for _, map in pairs({ESPBoxes, ESPBoxOutlines, ESPNames, ESPDistances, ESPTracers, ESPHealthBars, ESPHealthBarOutlines}) do
+			for _, map in pairs({
+				ESPBoxes,
+				ESPBoxOutlines,
+				ESPNames,
+				ESPDistances,
+				ESPTracers,
+				ESPHealthBars,
+				ESPHealthBarOutlines,
+			}) do
 				for _, obj in pairs(map) do
 					obj.Visible = false
 				end
@@ -145,21 +159,58 @@ return (function()
 		end
 
 		for _, plr in pairs(Players:GetPlayers()) do
-			if plr == Player then continue end
-			if Config.Team.Check and plr.Team == Player.Team then continue end
-			if not (plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")) then continue end
+			if plr == Player then
+				continue
+			end
 
-			local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
-			if not humanoid or humanoid.Health < 1 then continue end
+			local character = plr.Character
+			local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+			local rootPart = character and character:FindFirstChild("HumanoidRootPart")
+
+			local isTeammate = Config.Team.Check and plr.Team == Player.Team
+			local isAlive = humanoid and humanoid.Health > 0
+
+			if not character or not rootPart or not isAlive or isTeammate then
+				for _, map in pairs({
+					ESPBoxes,
+					ESPBoxOutlines,
+					ESPNames,
+					ESPDistances,
+					ESPTracers,
+					ESPHealthBars,
+					ESPHealthBarOutlines,
+				}) do
+					if map[plr] then
+						map[plr].Visible = false
+					end
+				end
+				continue
+			end
 
 			SetupPlayerESP(plr)
 
-			local rootPart = plr.Character.HumanoidRootPart
 			local screenPos, onScreen = Camera:WorldToViewportPoint(rootPart.Position)
-			if not onScreen then continue end
+			if not onScreen then
+				for _, map in pairs({
+					ESPBoxes,
+					ESPBoxOutlines,
+					ESPNames,
+					ESPDistances,
+					ESPTracers,
+					ESPHealthBars,
+					ESPHealthBarOutlines,
+				}) do
+					if map[plr] then
+						map[plr].Visible = false
+					end
+				end
+				continue
+			end
 
 			local topLeft, bottomRight = GetCharacterBoundingBox(plr)
-			if not topLeft or not bottomRight then continue end
+			if not topLeft or not bottomRight then
+				continue
+			end
 
 			local boxSize = bottomRight - topLeft
 			boxSize = Vector2.new(boxSize.X, boxSize.Y + 8)
@@ -225,7 +276,19 @@ return (function()
 
 			-- Healthbar
 			if Config.Toggle.HealthBar then
-				local healthPercent = humanoid.Health / humanoid.MaxHealth
+				local health, maxHealth = humanoid.Health, humanoid.MaxHealth
+
+				local nbps = plr:FindFirstChildWhichIsA("Model")
+				if nbps then
+					local hVal = nbps:FindFirstChild("Health")
+					local mhVal = nbps:FindFirstChild("MaxHealth")
+					if hVal and mhVal then
+						health = hVal.Value
+						maxHealth = mhVal.Value
+					end
+				end
+
+				local healthPercent = math.clamp(health / maxHealth, 0, 1)
 				local barHeight = boxSize.Y * healthPercent
 				local barPosition = Vector2.new(bottomRight.X + 5, topLeft.Y + (boxSize.Y - barHeight))
 
@@ -263,6 +326,7 @@ return (function()
 		end
 	end)
 
+	Config.Enabled = true
 
 	return {
 		Config = Config,
