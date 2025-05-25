@@ -19,7 +19,7 @@ return (function()
 			NumSides = 64,
 		},
 		Aim = {
-			Smoothness = 0.15,
+			Smoothness = 0.4,
 			TriggerKey = Enum.UserInputType.MouseButton2,
 		},
 		Team = {
