@@ -263,7 +263,6 @@ return (function()
 		end
 	end)
 
-	Config.Enabled = true
 
 	return {
 		Config = Config,
