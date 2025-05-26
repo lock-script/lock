@@ -156,9 +156,6 @@ return (function()
 	end
 
 	UserInputService.InputBegan:Connect(function(input, gameProcessed)
-		if gameProcessed then
-			return
-		end
 		if (input.UserInputType == Config.Aim.TriggerKey) or (input.KeyCode == Config.Aim.TriggerKey) then
 			IsTriggerHeld = true
 		end
