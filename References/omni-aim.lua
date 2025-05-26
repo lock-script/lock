@@ -19,7 +19,7 @@ return (function()
 			NumSides = 64,
 		},
 		Aim = {
-			Smoothness = 0.5,
+			Smoothness = 0.4,
 			TriggerKey = Enum.UserInputType.MouseButton2,
 		},
 		Team = {
@@ -95,7 +95,7 @@ return (function()
 		return true
 	end
 
-	local function IsVisible(targetPart)
+	local function IsVisible(targetPart: BasePart)
 		if not Config.WallCheck.Enabled then
 			return true
 		end
@@ -104,19 +104,25 @@ return (function()
 		end
 
 		local origin = Camera.CFrame.Position
-		local direction = (targetPart.Position - origin)
+		local direction = (targetPart.Position - origin).Unit
+		local distance = (targetPart.Position - origin).Magnitude
+
 		local raycastParams = RaycastParams.new()
 		raycastParams.FilterDescendantsInstances = Config.WallCheck.IgnoreList
 		raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
 		raycastParams.IgnoreWater = true
 
-		local raycastResult = workspace:Raycast(origin, direction, raycastParams)
-		if raycastResult then
-			return raycastResult.Instance:IsDescendantOf(targetPart.Parent)
-		else
+		local raycastResult = workspace:Raycast(origin, direction * distance, raycastParams)
+
+		-- If nothing is hit or the hit is very close to the target, it's visible
+		if not raycastResult then
 			return true
 		end
+
+		local hitDistance = (raycastResult.Position - origin).Magnitude
+		return hitDistance >= distance - 1 -- small margin for accuracy
 	end
+
 	local function GetScreenPosAndDist(worldPos)
 		local screenPos, onScreen = Camera:WorldToViewportPoint(worldPos)
 		if not onScreen then
