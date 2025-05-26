@@ -19,7 +19,7 @@ return (function()
 			NumSides = 64,
 		},
 		Aim = {
-			Smoothness = 0.4,
+			Smoothness = 0.5,
 			TriggerKey = Enum.UserInputType.MouseButton2,
 		},
 		Team = {
@@ -73,15 +73,28 @@ return (function()
 		if not player.Character then
 			return false
 		end
+
 		local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
 		if not humanoid or humanoid.Health <= 0 then
 			return false
 		end
-		if Config.Team.Check and player.Team == LocalPlayer.Team then
-			return false
+
+		if Config.Team.Check then
+			local playerTeam = player:FindFirstChild("Status") and player.Status:FindFirstChild("Team")
+			local localTeam = LocalPlayer:FindFirstChild("Status") and LocalPlayer.Status:FindFirstChild("Team")
+
+			if playerTeam and localTeam then
+				if playerTeam.Value == localTeam.Value then
+					return false
+				end
+			elseif player.Team == LocalPlayer.Team then
+				return false
+			end
 		end
+
 		return true
 	end
+
 	local function IsVisible(targetPart)
 		if not Config.WallCheck.Enabled then
 			return true
