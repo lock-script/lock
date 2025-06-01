@@ -2,7 +2,6 @@
 omni.cc is a roblox script hub. it detects the current game and loads the correct script from the `Games/` folder. unsupported games fall back to `unsupported.lua`.
 
 
-## supported games
 | game                 | last updated     | status |
 |----------------------|------------------|--------|
 | basketball legends   | june 2, 2025     | 🟢     |
@@ -15,6 +14,17 @@ omni.cc is a roblox script hub. it detects the current game and loads the correc
 | arsenal              | nil              | 🟠     |
 | no scope arcade      | nil              | 🟠     |
 | ninja tycoon         | nil              | 🟠     |
+| rake reborn          | nil              | 🔴     |
+| booga booga reborn   | nil              | 🔴     |
+| mortem metallum      | nil              | 🔴     |
+| combat warriors      | nil              | 🔴     |
+| dingus               | nil              | 🔴     |
+| steal time from other| nil              | 🔴     |
+| untitled tag game    | nil              | 🔴     |
+| wild west            | nil              | 🔴     |
+| industrialist        | nil              | 🔴     |
+| volleyball legends   | nil              | 🔴     |
+
 
 **legend**:  
 🟢 = working  
