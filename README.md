@@ -12,10 +12,14 @@ omni.cc is a roblox script hub. it detects the current game and loads the correc
 | slayer tycoon        | june 2, 2025     | 🟢     |
 | untitled drill game  | june 2, 2025     | 🟢     |
 | volleyball 4.2       | june 2, 2025     | 🟢     |
+| arsenal              | nil              | 🟠     |
+| no scope arcade      | nil              | 🟠     |
+| ninja tycoon         | nil              | 🟠     |
 
 **legend**:  
 🟢 = working  
-🟡 = partial  
+🟡 = partial 
+🟠 = work in progress
 🔴 = not supported / not working
 
 
