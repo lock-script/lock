@@ -1,8 +1,13 @@
 local ScriptHub = {}
 ScriptHub.Games = {
-    -- Format: [ID] = "script_name" (lowercase, no .lua)
-    [123456789] = "examplegame",       -- PlaceId
-    [9876543210] = "anothergame",      -- GameId
+    -- format: [id] = "script_name" (lowercase, no .lua)
+    [1316421563] = "volleyball4.2",
+    [7167470321] = "miningworld",
+    [7436755782] = "growagarden",
+    [4931927012] = "basketballlegends",
+    [2426874309] = "slayertycoon",
+    [7513130835] = "untitleddrillgame",
+    [1650291138] = "demonfall",
 }
 
 local BaseUrl = "https://raw.githubusercontent.com/omni-cc-create/omni.cc/refs/heads/main/Games/"
@@ -13,10 +18,10 @@ local function LoadGameScript(Name)
     end)
 
     if not Success then
-        warn("[omni.cc] Failed to load script:", Name)
-        warn("[omni.cc] Error:", Result)
+        warn("[omni.cc] failed to load script:", Name)
+        warn("[omni.cc] error:", Result)
     else
-        print("[omni.cc] Loaded:", Name)
+        print("[omni.cc] loaded:", Name)
     end
 end
 
@@ -25,9 +30,9 @@ local PlaceId = game.PlaceId
 local ScriptName = ScriptHub.Games[PlaceId] or ScriptHub.Games[GameId]
 
 if ScriptName then
-    print(("[omni.cc] Matched ID (%s), loading: %s"):format(ScriptName == ScriptHub.Games[PlaceId] and "PlaceId" or "GameId", ScriptName))
+    print(("[omni.cc] matched ID (%s), loading: %s"):format(ScriptName == ScriptHub.Games[PlaceId] and "PlaceId" or "GameId", ScriptName))
     LoadGameScript(ScriptName)
 else
-    print("[omni.cc] Unsupported game. Loading fallback script.")
+    print("[omni.cc] unsupported game. loading unsupported script.")
     LoadGameScript("unsupported")
 end
