@@ -8,13 +8,15 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/omni-cc-create/omni.c
 
 ## supported games
 
-| game              | placeid(s)         | status |
-|-------------------|--------------------|--------|
-| blox fruits       | 2753915549         | 🟢     |
-| combat warriors   | 4282985734         | 🟢     |
-| bedwars           | 6872265039         | 🟡     |
-| anime adventures  | 8304191830         | 🔴     |
-| deepwoken         | 4111023553         | 🔴     |
+| game                 | placeid(s)      | status |
+|----------------------|------------------|--------|
+| basketball legends   | TBD              | 🟢     |
+| demonfall            | TBD              | 🟢     |
+| grow a garden        | TBD              | 🟢     |
+| mining world         | TBD              | 🟡     |
+| slayer tycoon        | TBD              | 🟢     |
+| untitled drill game  | TBD              | 🟢     |
+| volleyball 4.2       | TBD              | 🟢     |
 
 **legend**:  
 🟢 = working  
