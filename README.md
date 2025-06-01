@@ -18,8 +18,11 @@ omni.cc is a roblox script hub. it detects the current game and loads the correc
 
 **legend**:  
 🟢 = working  
+
 🟡 = partial 
+
 🟠 = work in progress
+
 🔴 = not supported / not working
 
 
