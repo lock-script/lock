@@ -14,9 +14,9 @@ omni.cc is a roblox script hub. it detects the current game and loads the correc
 | volleyball 4.2       | june 2, 2025 | **🟢 supported**   |
 | arsenal              | june 2, 2025 | **🟢 supported**   |
 | no scope arcade      | june 2, 2025 | **🟢 supported**   |
+| booga booga reborn   |              | **🟢 supported**   |
 | ninja tycoon         | june 2, 2025 | **🟠 in progress** |
 | rake reborn          |              | **🔴 planned**     |
-| booga booga reborn   |              | **🔴 planned**     |
 | mortem metallum      |              | **🔴 planned**     |
 | combat warriors      |              | **🔴 planned**     |
 | dingus               |              | **🔴 planned**     |
