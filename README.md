@@ -16,13 +16,9 @@ omni.cc is a roblox script hub. it detects the current game and loads the correc
 | no scope arcade      | june 2, 2025 | **🟢 supported**   |
 | booga booga reborn   | june 2, 2025 | **🟢 supported**   |
 | ninja tycoon         | june 2, 2025 | **🟠 in progress** |
-| mortem metallum      |              | **🔴 planned**     |
 | combat warriors      |              | **🔴 planned**     |
-| dingus               |              | **🔴 planned**     |
 | steal time from other|              | **🔴 planned**     |
 | untitled tag game    |              | **🔴 planned**     |
-| wild west            |              | **🔴 planned**     |
-| industrialist        |              | **🔴 planned**     |
 | volleyball legends   |              | **🔴 planned**     |
 
 
