@@ -10,6 +10,7 @@ ScriptHub.Games = {
     [1650291138] = "demonfall",
     [286090429] = "arsenal",
     [6407649031] = "noscopearcade",
+    [2357812100] = "stealtimefromothers
 }
 
 local BaseUrl = "https://raw.githubusercontent.com/omni-cc-create/omni.cc/refs/heads/main/Games/"
