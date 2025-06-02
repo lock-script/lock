@@ -12,8 +12,8 @@ omni.cc is a roblox script hub. it detects the current game and loads the correc
 | slayer tycoon        | june 2, 2025 | **🟢 supported**   |
 | untitled drill game  | june 2, 2025 | **🟢 supported**   |
 | volleyball 4.2       | june 2, 2025 | **🟢 supported**   |
-| arsenal              | june 2, 2025 | **🟠 in progress** |
-| no scope arcade      | june 2, 2025 | **🟠 in progress** |
+| arsenal              | june 2, 2025 | **🟢 supported**   |
+| no scope arcade      | june 2, 2025 | **🟢 supported**   |
 | ninja tycoon         | june 2, 2025 | **🟠 in progress** |
 | rake reborn          |              | **🔴 planned**     |
 | booga booga reborn   |              | **🔴 planned**     |
