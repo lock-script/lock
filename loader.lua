@@ -8,6 +8,8 @@ ScriptHub.Games = {
     [2426874309] = "slayertycoon",
     [7513130835] = "untitleddrillgame",
     [1650291138] = "demonfall",
+    [286090429] = "arsenal",
+    [6407649031] = "noscopearcade",
 }
 
 local BaseUrl = "https://raw.githubusercontent.com/omni-cc-create/omni.cc/refs/heads/main/Games/"
