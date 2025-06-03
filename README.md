@@ -3,23 +3,23 @@ omni.cc is a roblox script hub. it detects the current game and loads the correc
 
 
 # **supported games status**
-| game                 | last updated | status             |
-|:---------------------|:-------------|------------------|
-| basketball legends   | june 2, 2025 | **🟢 supported**   |
-| demonfall            | june 2, 2025 | **🟢 supported**   |
-| grow a garden        | june 2, 2025 | **🟢 supported**   |
-| mining world         | june 2, 2025 | **🟢 supported**   |
-| slayer tycoon        | june 2, 2025 | **🟢 supported**   |
-| untitled drill game  | june 2, 2025 | **🟢 supported**   |
-| volleyball 4.2       | june 2, 2025 | **🟢 supported**   |
-| arsenal              | june 2, 2025 | **🟢 supported**   |
-| no scope arcade      | june 2, 2025 | **🟢 supported**   |
-| booga booga reborn   | june 2, 2025 | **🟢 supported**   |
-| ninja tycoon         | june 2, 2025 | **🟠 in progress** |
-| combat warriors      |              | **🔴 planned**     |
-| steal time from other|              | **🔴 planned**     |
-| untitled tag game    |              | **🔴 planned**     |
-| volleyball legends   |              | **🔴 planned**     |
+| game                   | last updated | status             |
+|:-----------------------|:-------------|--------------------|
+| basketball legends     | june 2, 2025 | **🟢 supported**   |
+| demonfall              | june 2, 2025 | **🟢 supported**   |
+| grow a garden          | june 2, 2025 | **🟢 supported**   |
+| mining world           | june 2, 2025 | **🟢 supported**   |
+| slayer tycoon          | june 2, 2025 | **🟢 supported**   |
+| untitled drill game    | june 2, 2025 | **🟢 supported**   |
+| volleyball 4.2         | june 2, 2025 | **🟢 supported**   |
+| arsenal                | june 2, 2025 | **🟢 supported**   |
+| no scope arcade        | june 2, 2025 | **🟢 supported**   |
+| booga booga reborn     | june 2, 2025 | **🟢 supported**   |
+| steal time from others |              | **🔴 planned**     |
+| ninja tycoon           | june 2, 2025 | **🟠 in progress** |
+| combat warriors        |              | **🔴 planned**     |
+| untitled tag game      |              | **🔴 planned**     |
+| volleyball legends     |              | **🔴 planned**     |
 
 
 
