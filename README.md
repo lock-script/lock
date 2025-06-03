@@ -3,23 +3,23 @@ omni.cc is a roblox script hub. it detects the current game and loads the correc
 
 
 # **supported games status**
-| game                   | last updated | status             |
-|:-----------------------|:-------------|--------------------|
-| basketball legends     | june 2, 2025 | **🟢 supported**   |
-| demonfall              | june 2, 2025 | **🟢 supported**   |
-| grow a garden          | june 2, 2025 | **🟢 supported**   |
-| mining world           | june 2, 2025 | **🟢 supported**   |
-| slayer tycoon          | june 2, 2025 | **🟢 supported**   |
-| untitled drill game    | june 2, 2025 | **🟢 supported**   |
-| volleyball 4.2         | june 2, 2025 | **🟢 supported**   |
-| arsenal                | june 2, 2025 | **🟢 supported**   |
-| no scope arcade        | june 2, 2025 | **🟢 supported**   |
-| booga booga reborn     | june 2, 2025 | **🟢 supported**   |
-| steal time from others |              | **🟢 supported**   |
-| ninja tycoon           | june 2, 2025 | **🟠 in progress** |
-| combat warriors        |              | **🔴 planned**     |
-| untitled tag game      |              | **🔴 planned**     |
-| volleyball legends     |              | **🔴 planned**     |
+| game                   | last updated | status |
+|:-----------------------|:-------------|:-------|
+| basketball legends     | june 2, 2025 | 🟢     |
+| demonfall              | june 2, 2025 | 🟢     |
+| grow a garden          | june 2, 2025 | 🟢     |
+| mining world           | june 2, 2025 | 🟢     |
+| slayer tycoon          | june 2, 2025 | 🟢     |
+| untitled drill game    | june 2, 2025 | 🟢     |
+| volleyball 4.2         | june 2, 2025 | 🟢     |
+| arsenal                | june 2, 2025 | 🟢     |
+| no scope arcade        | june 2, 2025 | 🟢     |
+| booga booga reborn     | june 2, 2025 | 🟢     |
+| steal time from others |              | 🟢     |
+| ninja tycoon           | june 2, 2025 | 🟠     |
+| combat warriors        |              | 🔵     |
+| untitled tag game      |              | 🔵     |
+| volleyball legends     |              | 🔵     |
 
 
 
@@ -27,9 +27,10 @@ omni.cc is a roblox script hub. it detects the current game and loads the correc
 
 **legend**:  
 🟢 = working  
-🟡 = partial support (some features work)  
-🟠 = work in progress (actively being developed)  
-🔴 = not supported (planning to make) / not working
+🟡 = partial support
+🟠 = work in progress
+🔵 = planning to make
+🔴 = not working
 
 
 
