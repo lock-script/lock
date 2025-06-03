@@ -4,7 +4,7 @@ omni.cc is a roblox script hub. it detects the current game and loads the correc
 
 # **supported games status**
 | game                   | last updated | status |
-|:-----------------------:|:-------------:|:-------:|
+|:-----------------------|:-------------:|:-------:|
 | basketball legends     | june 2, 2025   |🟢      |
 | demonfall              | june 2, 2025   |🟢      |
 | grow a garden          | june 2, 2025   |🟢      |
